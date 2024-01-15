@@ -1,0 +1,51 @@
+class Solution {
+public:
+    vector<vector<int>> findWinners(vector<vector<int>>& matches) {
+        vector<vector<int>> result;
+        map<int,int> mp;
+        for(auto it:matches)
+        {
+            int winner = it[0];
+            int losser = it[1];
+            bool flagWinner = true;
+            bool flagLosser = true;
+
+            if(mp.find(winner)!=mp.end() and mp[winner]!=0 and flagWinner==true)
+            {
+                mp[winner] = mp[winner]+0;
+                flagWinner = false;
+            }
+            if(mp.find(losser)!=mp.end() and flagLosser==true)
+            {
+                mp[losser]++;
+                flagLosser=false;
+            }
+            if(mp.find(winner)==mp.end() and flagWinner==true)
+            {
+                mp[winner] = 0;
+                flagWinner=false;
+            }
+            if(mp.find(losser)==mp.end() and flagLosser==true)
+            {
+                mp[losser] = 1;
+                flagLosser = false;
+            }
+        }
+        vector<int> temp0;
+        vector<int> temp1;
+        for(auto it:mp)
+        {
+            if(it.second==0)
+            {
+                temp0.push_back(it.first);
+            }
+            if(it.second==1)
+            {
+                temp1.push_back(it.first);
+            }
+        }
+        result.push_back(temp0);
+        result.push_back(temp1);
+        return result;
+    }
+};
